@@ -37,7 +37,8 @@
             container.css({'position' : 'relative', 'overflow' : 'hidden'});
             children.css({'width' : widthPX, 'left' : widthPX, 'top' : 0, 'position' : 'absolute' });
             root.css({'left' : '0'}).attr(statusData, 'active');
-            children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');
+            children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');            
+            container.css({'height' : root.height()});
             
             function swapStatus(target, active){
                 target.attr(statusData, 'active');
@@ -45,7 +46,9 @@
             }
             
             function slide(target, direction){
-                target.animate({left: direction + '=' + target.width()}, settings.speed);
+                target.animate({left: direction + '=' + target.width()}, settings.speed, function() {
+                    container.css({'height' : target.height()});
+                });
             }
           
             $('a[href^="#"]').not(anchorExclude).click(function(e) {
@@ -60,7 +63,6 @@
                 slide(target, '-');
                 
                 target.attr(previousData, '#' + active.attr('id'));
-                
                 swapStatus(target, active);
                 
             });
@@ -79,7 +81,7 @@
                     
                     slide(active, '+');
                     slide(target, '+');
-                
+                    
                     swapStatus(target, active);           
                 }
                 
