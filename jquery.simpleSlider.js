@@ -73,17 +73,18 @@
                 var active = $(this).parent();
                 var prev = active.attr(previousData);
                 
-                if(prev != null){
-                    
-                    var target = $(prev);
-                    
-                    target.css('left', '-' + target.width());
-                    
-                    slide(active, '+');
-                    slide(target, '+');
-                    
-                    swapStatus(target, active);           
+                if(prev == null){
+                    prev = '#' + root.attr('id');
                 }
+                    
+                var target = $(prev);
+                
+                target.css('left', '-' + target.width());
+                
+                slide(active, '+');
+                slide(target, '+');
+                
+                swapStatus(target, active);
                 
             });
             
