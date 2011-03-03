@@ -7,7 +7,7 @@
             'callback' : function() {}
     };
     
-    $.fn.slideLeft = function(speed, target, callback) {        
+    $.fn.transitionLeft = function(speed, target, callback) {        
         return this.each(function() {
             var current = $(this);
             var callback = callback || function() {};
@@ -18,7 +18,7 @@
         });        
     }
     
-    $.fn.slideRight = function(speed, target, callback) {        
+    $.fn.transitionRight = function(speed, target, callback) {        
         return this.each(function() {
             var current = $(this);
             var callback = callback || function() {};
@@ -66,7 +66,7 @@
                 var target = $($(this).attr('href'));
                 
                 target.css('left', target.width());                
-                active.slideLeft(settings.speed, target);                
+                active.transitionLeft(settings.speed, target);                
                 target.attr(previousData, '#' + active.attr('id'));
                 swapStatus(target, active);
                 
@@ -80,7 +80,7 @@
                 var target = $(prev || ('#' + root.attr('id')));
                 
                 target.css('left', '-' + target.width());                
-                active.slideRight(settings.speed, target);                
+                active.transisionRight(settings.speed, target);                
                 swapStatus(target, active);
                 
             });
