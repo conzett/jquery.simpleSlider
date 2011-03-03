@@ -15,31 +15,33 @@
         active.removeAttr(statusData);
     }
     
+    function transition(active, target, speed, direction, callback){
+        
+        active = $(active);
+        target = $(target);
+        callback = callback || function() {};
+        var value = "";        
+        if(direction == '+'){
+            value = '-';
+        }        
+        $(target).css('left', value + $(target).width());
+        $(active).animate({left: direction + '=' + active.width()}, speed, function() {
+                callback.call(this);
+        });        
+        $(target).animate({left: direction + '=' + target.width()}, speed);
+        target.parent().height(target.height());
+        swapStatus(target, active);
+    }
+    
     $.fn.transitionLeft = function(target, speed, callback) {        
         return this.each(function() {
-            var current = $(this);
-            var callback = callback || function() {};
-            $(target).css('left', $(target).width());
-            $(current).animate({left: '-=' + $(this).width()}, speed, function() {
-                    callback.call(this);
-            });
-            $(target).animate({left: '-=' + $(this).width()}, speed);
-            current.parent().height(target.height());
-            swapStatus(target, current);
+            transition($(this), target, speed, '-', callback);
         });        
     }
     
     $.fn.transitionRight = function(target, speed, callback) {        
         return this.each(function() {
-            var current = $(this);
-            var callback = callback || function() {};
-            $(target).css('left', '-' + $(target).width()); 
-            $(current).animate({left: '+=' + $(this).width()}, speed, function() {
-                    callback.call(this);
-            });
-            $(target).animate({left: '+=' + $(this).width()}, speed);
-            current.parent().height($(target).height());
-            swapStatus(target, current);
+            transition($(this), target, speed, '+', callback);
         });       
     }
     
@@ -81,8 +83,7 @@
                 
                 var active = $(this).parent();
                 var prev = active.attr(previousData);                
-                var target = $(prev || ('#' + root.attr('id')));
-                
+                var target = $(prev || ('#' + root.attr('id')));                
                                
                 active.transitionRight(target, settings.speed);                
                 
