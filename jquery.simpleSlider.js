@@ -7,7 +7,7 @@
             'callback' : function() {}
     };
     
-    $.fn.transitionLeft = function(speed, target, callback) {        
+    $.fn.transitionLeft = function(target, speed, callback) {        
         return this.each(function() {
             var current = $(this);
             var callback = callback || function() {};
@@ -19,7 +19,7 @@
         });        
     }
     
-    $.fn.transitionRight = function(speed, target, callback) {        
+    $.fn.transitionRight = function(target, speed, callback) {        
         return this.each(function() {
             var current = $(this);
             var callback = callback || function() {};
