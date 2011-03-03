@@ -19,6 +19,7 @@
         return this.each(function() {
             var current = $(this);
             var callback = callback || function() {};
+            $(target).css('left', $(target).width());
             $(current).animate({left: '-=' + $(this).width()}, speed, function() {
                     callback.call(this);
             });
@@ -32,6 +33,7 @@
         return this.each(function() {
             var current = $(this);
             var callback = callback || function() {};
+            $(target).css('left', '-' + $(target).width()); 
             $(current).animate({left: '+=' + $(this).width()}, speed, function() {
                     callback.call(this);
             });
@@ -69,7 +71,6 @@
                 var active = $('[' + statusData +'="active"]');
                 var target = $($(this).attr('href'));
                 
-                target.css('left', target.width());                
                 active.transitionLeft(target, settings.speed);                
                 target.attr(previousData, '#' + active.attr('id'));
                 
@@ -82,7 +83,7 @@
                 var prev = active.attr(previousData);                
                 var target = $(prev || ('#' + root.attr('id')));
                 
-                target.css('left', '-' + target.width());                
+                               
                 active.transitionRight(target, settings.speed);                
                 
             });
