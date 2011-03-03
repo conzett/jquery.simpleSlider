@@ -7,6 +7,14 @@
             'callback' : function() {}
     };
     
+    var statusData = 'data-ss_status';
+    var previousData = 'data-ss_previous';
+    
+    function swapStatus(target, active){
+        $(target).attr(statusData, 'active');
+        active.removeAttr(statusData);
+    }
+    
     $.fn.transitionLeft = function(target, speed, callback) {        
         return this.each(function() {
             var current = $(this);
@@ -16,6 +24,7 @@
             });
             $(target).animate({left: '-=' + $(this).width()}, speed);
             current.parent().height(target.height());
+            swapStatus(target, current);
         });        
     }
     
@@ -27,7 +36,8 @@
                     callback.call(this);
             });
             $(target).animate({left: '+=' + $(this).width()}, speed);
-            current.parent().height(target.height());
+            current.parent().height($(target).height());
+            swapStatus(target, current);
         });       
     }
     
@@ -47,19 +57,11 @@
             var width = container.width();
             var height = root.height();
             
-            var statusData = 'data-ss_status';
-            var previousData = 'data-ss_previous';
-            
             container.css({'position' : 'relative', 'overflow' : 'hidden'});
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
             root.css({'left' : '0'}).attr(statusData, 'active');
             children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');            
             container.css({'height' : root.height()});
-            
-            function swapStatus(target, active){
-                target.attr(statusData, 'active');
-                active.removeAttr(statusData);
-            }
           
             $('a[href^="#"]').not(anchorExclude).click(function(e) {
                 e.preventDefault();
@@ -70,7 +72,6 @@
                 target.css('left', target.width());                
                 active.transitionLeft(target, settings.speed);                
                 target.attr(previousData, '#' + active.attr('id'));
-                swapStatus(target, active);
                 
             });
             
@@ -83,7 +84,6 @@
                 
                 target.css('left', '-' + target.width());                
                 active.transitionRight(target, settings.speed);                
-                swapStatus(target, active);
                 
             });
             
