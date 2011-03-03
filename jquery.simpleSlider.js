@@ -15,6 +15,7 @@
                     callback.call(this);
             });
             $(target).animate({left: '-=' + $(this).width()}, speed);
+            current.parent().height(target.height());
         });        
     }
     
@@ -26,6 +27,7 @@
                     callback.call(this);
             });
             $(target).animate({left: '+=' + $(this).width()}, speed);
+            current.parent().height(target.height());
         });       
     }
     
@@ -66,7 +68,7 @@
                 var target = $($(this).attr('href'));
                 
                 target.css('left', target.width());                
-                active.transitionLeft(settings.speed, target);                
+                active.transitionLeft(target, settings.speed);                
                 target.attr(previousData, '#' + active.attr('id'));
                 swapStatus(target, active);
                 
@@ -80,7 +82,7 @@
                 var target = $(prev || ('#' + root.attr('id')));
                 
                 target.css('left', '-' + target.width());                
-                active.transisionRight(settings.speed, target);                
+                active.transitionRight(target, settings.speed);                
                 swapStatus(target, active);
                 
             });
