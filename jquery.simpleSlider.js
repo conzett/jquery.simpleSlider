@@ -19,18 +19,32 @@
         
         active = $(active);
         target = $(target);
+        parent = target.parent(); /* should be the container */
         callback = callback || function() {};
+        
+        var containerHeight = Math.max(active.height(), target.height());
+        
         var value = "";        
         if(direction == '+'){
             value = '-';
-        }        
+        }
+        
+        parent.height(containerHeight);
+        
+        $(active).css('position', 'absolute');
         $(target).css('left', value + $(target).width());
+        
         $(active).animate({left: direction + '=' + active.width()}, speed, function() {
                 callback.call(this);
-        });        
-        $(target).animate({left: direction + '=' + target.width()}, speed);
-        target.parent().height(target.height());
+        });
+        
+        $(target).animate({left: direction + '=' + target.width()}, speed, function() {
+            target.css('position', 'static');
+            parent.css('height', 'auto');
+        });
+        
         swapStatus(target, active);
+        
     }
     
     $.fn.transitionLeft = function(target, speed, callback) {        
@@ -64,8 +78,8 @@
             container.css({'position' : 'relative', 'overflow' : 'hidden'});
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
             root.css({'left' : '0'}).attr(statusData, 'active');
-            children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');            
-            container.css({'height' : root.height()});
+            children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');
+            root.css('position', 'static');
           
             $('a[href^="#"]').not(anchorExclude).click(function(e) {
                 e.preventDefault();
