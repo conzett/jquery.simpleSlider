@@ -32,7 +32,7 @@
         parent.height(containerHeight);
         
         $(active).css('position', 'absolute');
-        $(target).css('left', value + $(target).width());
+        $(target).css('left', value + target.width());
         
         $(active).animate({left: direction + '=' + active.width()}, speed, function() {
                 callback.call(this);
