@@ -34,13 +34,10 @@
         $(active).css('position', 'absolute');
         $(target).css('left', value + target.width());
         
-        $(active).animate({left: direction + '=' + active.width()}, speed, function() {
+        $(active).add(target).animate({left: direction + '=' + active.width()}, speed, function() {
+                target.css('position', 'static');
+                parent.css('height', 'auto');
                 callback.call(this);
-        });
-        
-        $(target).animate({left: direction + '=' + target.width()}, speed, function() {
-            target.css('position', 'static');
-            parent.css('height', 'auto');
         });
         
         swapStatus(target, active);
