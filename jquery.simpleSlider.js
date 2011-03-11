@@ -4,8 +4,7 @@
             'speed' : 200,
             'backButtons' : true,
             'backClassName' : 'back',
-            'root' : null,
-            'callback' : function() {}
+            'root' : null
     };
     
     var statusData = 'data-ss_status';
@@ -57,7 +56,7 @@
         });       
     }
     
-    $.fn.simpleSlider = function(options) {       
+    $.fn.simpleSlider = function(options, callback) {       
             
         if ( options ) {
             $.extend( settings, options );
@@ -72,6 +71,7 @@
             var root = settings.root || children.first();            
             var width = container.width();
             var height = root.height();
+            var hash = window.location.hash;
             
             container.css({'position' : 'relative', 'overflow' : 'hidden'});
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
@@ -104,7 +104,7 @@
                 
             });
             
-            settings.callback.call(this);
+            callback.call(this);
         
         });
 
