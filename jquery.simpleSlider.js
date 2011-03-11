@@ -2,6 +2,7 @@
     
     var settings = {
             'speed' : 200,
+            'backButtons' : true,
             'backClassName' : 'back',
             'root' : null,
             'callback' : function() {}
@@ -75,8 +76,11 @@
             container.css({'position' : 'relative', 'overflow' : 'hidden'});
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
             root.css({'left' : '0'}).attr(statusData, 'active');
-            children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');
             root.css('position', 'static');
+            
+            if(settings.backButtons == true){
+                children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');
+            }            
           
             $('a[href^="#"]').not(anchorExclude).click(function(e) {
                 e.preventDefault();
