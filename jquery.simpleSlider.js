@@ -77,6 +77,7 @@
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
             root.css({'left' : '0'}).attr(statusData, 'active');
             root.css('position', 'static');
+            location.hash = $(root).attr('id');
             
             if(settings.backButtons == true){
                 children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');
@@ -89,8 +90,7 @@
                 var target = $($(this).attr('href'));
                 
                 active.transitionLeft(target, settings.speed);                
-                target.attr(previousData, '#' + active.attr('id'));
-                
+                target.attr(previousData, '#' + active.attr('id'));             
             });
             
             $(backClass).click(function(e) {
