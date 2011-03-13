@@ -16,6 +16,10 @@
         active.removeAttr(statusData);
     }
     
+    function stripSuffix(string){
+        return string.substring(0, (string.length-1));
+    }
+    
     function transition(active, target, speed, direction, callback){
         
         active = $(active);
@@ -111,7 +115,9 @@
             )            
             
             if(location.hash == ''){
-                location.hash = $(root).attr('id');
+                location.hash = stripSuffix($(root).attr('id'));
+            }else{
+                $('a[href="' + location.hash + '"]').click();
             }
             
             callback.call(this);
