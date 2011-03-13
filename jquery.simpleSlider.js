@@ -78,17 +78,7 @@
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
             root.css({'left' : '0'}).attr(statusData, 'active');
             root.css('position', 'static');
-            
-            if(location.hash == ''){
-                location.hash = $(root).attr('id');
-            }
-            
-            children.each(
-                function(){
-                    $(this).attr('id', $(this).attr('id') + idSuffix);
-                }
-            )
-            
+                        
             if(settings.backButtons == true){
                 children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');
             }            
@@ -113,6 +103,16 @@
                 active.transitionRight(target, settings.speed);                
                 
             });
+            
+            children.each(
+                function(){
+                    $(this).attr('id', $(this).attr('id') + idSuffix);
+                }
+            )            
+            
+            if(location.hash == ''){
+                location.hash = $(root).attr('id');
+            }
             
             callback.call(this);
         
