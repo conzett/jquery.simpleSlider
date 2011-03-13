@@ -9,6 +9,7 @@
     
     var statusData = 'data-ss_status';
     var previousData = 'data-ss_previous';
+    var idSuffix = '_';
     
     function swapStatus(target, active){
         $(target).attr(statusData, 'active');
@@ -79,6 +80,12 @@
             root.css('position', 'static');
             location.hash = $(root).attr('id');
             
+            children.each(
+                function(){
+                    $(this).attr('id', $(this).attr('id') + idSuffix);
+                }
+            )
+            
             if(settings.backButtons == true){
                 children.not(root).prepend('<a class="' + settings.backClassName + '" href="#">Back</a>');
             }            
@@ -87,7 +94,7 @@
                 e.preventDefault();
                 
                 var active = $('[' + statusData +'="active"]');
-                var target = $($(this).attr('href'));
+                var target = $($(this).attr('href') + idSuffix);
                 
                 active.transitionLeft(target, settings.speed);                
                 target.attr(previousData, '#' + active.attr('id'));             
