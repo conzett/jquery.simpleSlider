@@ -105,7 +105,7 @@
                 
                 var active = $(this).parent();
                 var prev = active.attr(previousData);                
-                var target = $(prev || ('#' + root.attr('id')));                
+                var target = $(prev || ('#' + root.attr('id')) + idSuffix);                
                                
                 active.transitionRight(target, settings.speed);                
                 
