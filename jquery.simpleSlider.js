@@ -9,19 +9,12 @@
     
     var statusData = 'data-ss_status';
     var previousData = 'data-ss_previous';
-    var idSuffix = '_'; /* should only be one char in length */
+    
+    //window.onhashchange = alert("change")
     
     function swapStatus(target, active){
         $(target).attr(statusData, 'active');
         active.removeAttr(statusData);
-    }
-    
-    function stripSuffix(string){
-        return string.substring(0, (string.length-1));
-    }
-    
-    function setHash(id){
-        location.hash = stripSuffix(id);
     }
     
     function transition(active, target, speed, direction, callback){
@@ -41,15 +34,14 @@
         parent.height(containerHeight);
         
         $(active).css('position', 'absolute');
-        $(target).css('left', value + target.width());
+        target.css('left', value + target.width());
         
         $(active).add(target).animate({left: direction + '=' + active.width()}, speed, function() {
                 target.css('position', 'static');
                 parent.css('height', 'auto');
                 callback.call(this);
         });
-        
-        setHash(target.attr('id'));
+
         swapStatus(target, active);
         
     }
@@ -96,10 +88,10 @@
                 e.preventDefault();
                 
                 var active = $('[' + statusData +'="active"]');
-                var target = $($(this).attr('href') + idSuffix);
+                var target = $($(this).attr('href'));
                 
                 active.transitionLeft(target, settings.speed);                
-                target.attr(previousData, '#' + active.attr('id'));             
+                target.attr(previousData, '#' + active.attr('id'));
             });
             
             $(backClass).click(function(e) {
@@ -107,22 +99,18 @@
                 
                 var active = $(this).parent();
                 var prev = active.attr(previousData);                
-                var target = $(prev || ('#' + root.attr('id')) + idSuffix);                
+                var target = $(prev || ('#' + root.attr('id')));                
                                
                 active.transitionRight(target, settings.speed);                
                 
             });
-            
-            children.each(
-                function(){
-                    $(this).attr('id', $(this).attr('id') + idSuffix);
-                }
-            )            
+           
             
             if(location.hash == ''){
-                setHash($(root).attr('id'));
+                //setHash($(root).attr('id'));
             }else{
-                $('a[href="' + location.hash + '"]').click();
+                //$('[' + statusData +'="active"]').transitionLeft($(location.hash + idSuffix), settings.speed);
+                //$('a[href="' + location.hash + '"]').click();
             }
             
             callback.call(this);
