@@ -9,7 +9,7 @@
     
     var statusData = 'data-ss_status';
     var previousData = 'data-ss_previous';
-    var idSuffix = '_';
+    var idSuffix = '_'; /* should only be one char in length */
     
     function swapStatus(target, active){
         $(target).attr(statusData, 'active');
@@ -18,6 +18,10 @@
     
     function stripSuffix(string){
         return string.substring(0, (string.length-1));
+    }
+    
+    function setHash(id){
+        location.hash = stripSuffix(id);
     }
     
     function transition(active, target, speed, direction, callback){
@@ -115,7 +119,7 @@
             )            
             
             if(location.hash == ''){
-                location.hash = stripSuffix($(root).attr('id'));
+                setHash($(root).attr('id'));
             }else{
                 $('a[href="' + location.hash + '"]').click();
             }
