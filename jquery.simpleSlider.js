@@ -78,7 +78,10 @@
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
             root.css({'left' : '0'}).attr(statusData, 'active');
             root.css('position', 'static');
-            location.hash = $(root).attr('id');
+            
+            if(location.hash == ''){
+                location.hash = $(root).attr('id');
+            }
             
             children.each(
                 function(){
