@@ -25,7 +25,7 @@
     }
     
     function transition(active, target, speed, direction, callback){
-        
+
         active = $(active);
         target = $(target);
         parent = target.parent(); /* should be the container */
@@ -49,6 +49,7 @@
                 callback.call(this);
         });
         
+        setHash(target.attr('id'));
         swapStatus(target, active);
         
     }
