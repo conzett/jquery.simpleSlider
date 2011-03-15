@@ -10,8 +10,6 @@
     var statusData = 'data-ss_status';
     var previousData = 'data-ss_previous';
     
-    //window.onhashchange = alert("change")
-    
     function swapStatus(target, active){
         $(target).attr(statusData, 'active');
         active.removeAttr(statusData);
@@ -35,10 +33,14 @@
         
         $(active).css('position', 'absolute');
         target.css('left', value + target.width());
+        target.show();
         
         $(active).add(target).animate({left: direction + '=' + active.width()}, speed, function() {
                 target.css('position', 'static');
-                parent.css('height', 'auto');
+                parent.css('height', 'auto');                
+                active.hide();
+                location.hash = "#" + target.attr('id');
+                
                 callback.call(this);
         });
 
@@ -77,6 +79,7 @@
             
             container.css({'position' : 'relative', 'overflow' : 'hidden'});
             children.css({'width' : width + 'px', 'left' : width + 'px', 'top' : 0, 'position' : 'absolute' });
+            children.not(root).hide();
             root.css({'left' : '0'}).attr(statusData, 'active');
             root.css('position', 'static');
                         
@@ -104,13 +107,11 @@
                 active.transitionRight(target, settings.speed);                
                 
             });
-           
             
             if(location.hash == ''){
-                //setHash($(root).attr('id'));
-            }else{
-                //$('[' + statusData +'="active"]').transitionLeft($(location.hash + idSuffix), settings.speed);
-                //$('a[href="' + location.hash + '"]').click();
+                location.hash = "#" + $(root).attr('id');
+            }else{              
+                $('a[href="' + location.hash + '"]').click();
             }
             
             callback.call(this);
